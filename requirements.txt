@@ -1,0 +1,6 @@
+pymongo
+requests
+logging
+http
+urllib
+MySQL-python
