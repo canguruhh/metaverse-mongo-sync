@@ -397,7 +397,7 @@ def sync_block(db_chain, block_height, tx_id, o_id, i_id, addresses, rpc):
             block_tx_output_value['%s_%s_%s' % (tx_hash, o['index'], asset_name)] = (
                 tx_id, a_id, int(o['value']), int(o['index']), asset_name, '8', lock_height)
 
-            new_outputs.append({'address':o['address'], 'quantity':o['value'], 'type':'transfer', 'index':o['index'], 'asset':{'symbol':'ETP', 'decimals':8}, 'lock_height': lock_height})
+            new_outputs.append({'address': '' if o.get('address') is None else o['address'], 'quantity':o['value'], 'type':'transfer', 'index':o['index'], 'asset':{'symbol':'ETP', 'decimals':8}, 'lock_height': lock_height})
             o_id += 1
 
         new_tx['id'] = tx_id
