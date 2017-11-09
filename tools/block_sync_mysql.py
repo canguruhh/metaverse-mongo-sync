@@ -9,7 +9,6 @@ import json
 import collections
 import time
 import sys
-import MySQLdb
 import httplib
 import urllib
 
@@ -254,6 +253,8 @@ def sync_block(db_chain, block_height, tx_id, o_id, i_id, addresses, rpc):
     res = get_header(rpc, block_height)
     try:
         res = json.loads(res)
+        if res.get('error') is not None or res.get('result') is None:
+            raise HeaderNotFound('%s' % res)
     except Exception as e:
         logging.info('getheader json loads exception,%s,%s, %s' % (block_height, e, res))
         raise HeaderNotFound('header %s not found' % block_height)
@@ -314,8 +315,8 @@ def sync_block(db_chain, block_height, tx_id, o_id, i_id, addresses, rpc):
                 pre_index = int(p['index'])
                 hash_index = '%s_%s_%s' % (pre_hash, pre_index, a)
                 if pre_hash != null_hash and hash_index not in hash_ids and hash_index not in block_tx_output_value:
-                    raise CriticalException('previous output hash not found,%s', p)
-                    # continue
+                    #raise CriticalException('previous output hash not found,%s', p)
+                    continue
 
                 if pre_hash == null_hash:
                     pre_ids = [-1, -1, 0, -1, 'ETP', '8', 0]
@@ -490,7 +491,7 @@ def process_fork(db_chain, rpc, current_height):
 
     def check_block(hash_):
         b = db_chain.block.find({'hash':hash_})
-        return not not b
+        return not not b.count()
 
     fork_height = -1
     while True:
@@ -532,6 +533,7 @@ def init_index(db_chain):
     db_chain.transaction.create_index('tx_id')
     db_chain.output.create_index('output_id')
     db_chain.input.create_index('input_id')
+    db_chain.output.create_index([("hash", pymongo.ASCENDING), ("index", pymongo.ASCENDING), ('asset', pymongo.ASCENDING)]) 
 
 
 def workaholic(stopped):
