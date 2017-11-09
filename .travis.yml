@@ -1,21 +1,22 @@
 sudo: required
 services:
-  - docker
+- docker
 language: python
 env:
   global:
-    - COMMIT=${TRAVIS_COMMIT::8}
-    - secure: RqIB6HW4SFzXmWG/sMxvUo2QMFOkscGiF8fRXQLRrvMinabdfIX38zd95e4mzZy5FbkvSsgBDexn2uepee00yIHghDkN6zSsLrq4Zffn70BjZZcOTitVeDoEWGXy1a4GL7di7ZI7n4ToxqpHhAlkv6KLX1WyiUux89GtqyVa6Oi9tqBpALOL+fzG2pZuP2k+GHeW8dycbCnPMSHSotpuEBTnSmXrflm8BQRMSQOtxe77FoB6ZXRsgCdFygB7lqAXo6juwwItHlTlWwbg2d40lO3IdkCqJeGWJpZBpgAUQIicQPJGQvhGzls9X81CP9mH5JXpIDSPtBJNSp5B0kZS6QYIhwFLBl6DwL2+XOgns87dosXcWHw94qirNEOoRElfrLE1rHI7Id/p7vcxEZxnb3B97zFnwYnKDwLXSbztWLJkK/kuhezNBCNLZPC14toYCBhW2fzD8k/P4YsIIiOd2mANpcZAXUj3ynGVEwSjVt+5zDM+1+E7uzWPEijBuAODB+1X1IK4ytTPxMsnxtB62PFHmpYsWCovIXCtzTNhcF87M5/qcMn621qo1eGMyqP2g61bQcWm1I9uDAayPIKbOPz4S3YU9OljEOlbM4Hd1LYn0nSFoK1bxqIsAGQLkVED98SESsce6QQexGRt+5EHCZJ4Q/t3oL8ORWvk4e8sjX4=
-    - secure: jW4TUmDRUeLb1aZJGDfrhoNvIsaI7s1AOdC3571/pLDqqLX+GEyDo6Ckb+T4aw5ihb0bOErEGbCiLAABcMoWEl9/yDY2lnMo2psP4EPAIqcY5XJOTeFIAAvMP2Fc2U1xJeIYYNQ866ukQOqlf+cpVfImMiRFFQZHNgyV/C+0KK0RrOWYRUTF4iB6IH+JIHEwK5VU6zlCEkXTp8H99kMi5g0F5A6V7sF7b55BHYynQ2gZLuGT++Q5ogY/QpmKJRBZnKWpHONvC2nVha+D6S8HraN4bQGVClHGeAVTlfql99Z0RsrARfwRvl4vH3+D++iBLznkH6P8kuj+myowtpSTiC8TTxHZkuYMcRK244344ZH/x6JaLGj8veoii1Hx/klGmspJLNiblGPPqS0jFAdKaB54/KKUM83xjz+PyK40IhTvnp8l1/giJjXrc55T0RBoTmJjeY70CtGDDNGzvmd+xbqOgRdj2huB2195be/ka6FlfabXYsIgNCr1epb0TXt5pxWcQkUw7IXIQ0VBnMQ4s5nLSZr2LhM/esL2ts3nAl4G4SJWY20BDHv9CrWp4IaerDX7L3azDrRQgSi41WkuK+Ck+l+ZEG1nLJu0IILFf5uFU1L9KBcTLeU50oESXRXUEZW9FiD+X1F3qgdvbztuuUXxxnVCfRjGT/7kFz6GRwM=
-    - secure: VkaWuw5oCrmrXs11jSGhATe5CFcPO/mJzEFxnQY2jq7mJZ95tEdemP2dJhR+f4TTkdh10wp91Qly7fuqW1CWeGU17Bf18r+iVe6iXYfVO9EwJmav030b4KO2bsp6DgYF4ESWJ9EM8LDayxzI6SDYegCfZ+vhnyMvNP0VZMbOg8MUerCQJoZ8H30mj6Qvnyf0rz9TX9pO1cfhyepc/Qj5bvl7thK5YDF5dbPJGHrXYlXYf7jtsEb1b699/tbXbmF8AaLtApjcvDjbD7K9xII7bnXuwuRBzfb0YC+rwEVJnZGim0gP6NoSXnlzNweo3ibWtquahCfbj6l4UpPak8nWW0cDkyjrYnKGULu3s7BNJ6lL4QyC9wOQ+a23dh/WtGZeOekzUgKWxxEZ+IX+PxvRqXDFPie6ukePCadtAeGf29WqBYPmjk036fmq5GNzyf+ZXXuYUw2KRpIvjZK0WUkht6+XacO9GXCT81ks/GvC3NwlYtSdE9LapVoumN44lSlKc5eyQxUS8TGCBVHO2ffXpQO2QbYtRts0Ngfana26/VOIpRcpcwvKB7i+253oZvGRYuK+GaHSTjtavFczJ96BbOEn59VAYuMgRD5YJzPLirbsgx5e/BEnEHN1Z0eEosFoAnrO0ZBjLebVBktJ8VfxLm2AzsQIIYxG2SlfH4hxk6U=
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - secure: ZRaN2hiCSBXW2G3J5lt2tQVLGEK/DeEKRuH9Fmi5SjTqN6cYzZVD56pD8Ak+LctuFyy3fKPyc2uFDvJDuSlAsjla3H3J4SbfyVsI3gRAwXMD2Ue2ANfZJ/xJIbvv+Zu7REqu+BkqShOtdmbjqWLXy6JMA/3jRVEVIJ/JpX8PE7wwCVVhSMx01odfQYS4wgxv8uM7FVY5Ttc8BaZW/Gv5DF5syGQQwkEA5V3p/0DUMymQcrGBnTFkMgJY8f1K13GXKIR+vT+co+C1fYxZW03ua0frdo4xbeLNRYKKdo+9Fofmfg0+agWTh4WKYFKPeubN6xvAIYZKOdDruRHv/Dc8XxVzcKdEH1Ozhpcz456q/plR3vWNX6wcjTXp6UdNxG16WBT0UkPO4pHLG5zZfN0a6irleX0aJdBo20XOUmzqOKtbaP4RUju5t6vcWB415UqQPtC1x4nPYRK9lIihrkwMomAjQ9/IYtLdq9rh0Dj2z3VlZmK5BB8Mbl+Og1AARU2xbqri7tohb3o5OA8hPmj9lDmY6xKaA6Lsp/55yy4VEUPQyLVE6QEbtI69zvCWTtnMLkeLUy08g0FYjZdD+1dzAxOL1iDKs3bJMFiMriwbIdlTRLFWdzjucRmBCC/33roivIWCahiPrgjY6GfJ3OrBUwh/gD/DAjnxCj8PDX44Vwc=
+  - secure: AmRK1NHRxbN/ys9LmDcE/UwhKH17baGovSKt4SdZ6ahZQT8zIwzMm46qHFBHEjgxCG5LHemUK1NW3pY/Ty0UqjO7RZW6gpiMJgG40TAVSzxa/nQE4TlQadVEPqj353+71LakCC5i90pnImigjCX/UjeaHSCARPww49Rx35+3xgYo+lfh9yNOvyKMPorHlsV52P2/FXz07q+Gqg9jFC+MrDBuwRVOd2fM8kC6K/CxDLSt65E2T5SihjBfXrS5R5WSlHyJrGaKob/ua8I3Da7LMOCFksuax9ZdVobfsZD85ebxr8RSugl+aFXActwtLYgEwEcvMJVaorzk9efBkkMX/u9UlE+NK4p6ptMyi1Uc+G2eVg+YKzBAhdBxzj5ivHOZ7Tl3MQNSASRprAT5GXHLrdTjd1yiX2sN4T9blniG7b7QCC0R3VG8WB2S4dgfYVjGjb2SKabaNDh7fuvNS7eLH7oVReH4nXfj0WO6Up770UdJZKRI2qi8+kB5j8rC6zdchIZPqAE6J3Hnd8wr0FpSZvyrX56OY7PJ2jferY5+yrPiXuiwcNDr+jyUHvRkSuwrMBpPyTbFeZXTiyHrxhdG5kq7rjzCnwfGMwL90zwR6MdeKpJQYtcgQU/M0CEszqLqL4t4SCDb0czctnzbslW26syz5+D1fHFOBcc8u0j6pLw=
+  - secure: M19SJicoiaFC3Oj0484EPozlGboH+XudhPcdyxn/W0v+LLlYzR8cy1f1U3mk7fgXGCGTgxlT/iesLvMssfieCJ6qg6E9CY8Vw42+GbKJWxAaQ9qNd9Irr3T1UFgi1vK15+fLTB2qlrpXyRALCUJsc8vUCBtBJ8BH2vDeF1fDEoktbovPJb5NP9zZwyvigCSUZoqngppk/KcL0C/v66vAAt2Q9ZsYLgGN+QpzWoojR1w3JDITWdcTPJ+avtv+EnpgR1ARDv4fH5AS3spdAJCo+AguoCMl/OViVuTuWtI+6/bCJjwX+jg3xruTT0WKI7jCMamiekQkuGl5hZ4DUSR9cUZsmq9UpxKK5QV6vKLGz9lbXE7nHR8E8X4W/+rnVS+yNsnDI9e7MpnB/WYPnsxB0gvoInsStfaF/FvrbC4PFZD1FEgfWxs9owNLKiVGlieelHgRNiSErTj7TFKkeevtnaUzS0V6uPO07vUaWvev6v9XkC3uS/k4Ch/c3XlLRvMdaZvBybwPavD6+jXQ7BhgDH4KJYsKQUpV97XHoJf/0ZWu3xAxuFaqR3WYsSfyIFD0cuFFG85iVfYY5XJTbvgczztu9tAUiU/8UuIIzB8Gwuh8PpufXmbTk2/p+gz/1tJeX/c+NTgH0Xe+TCpKGeDU4bBqLlwGus83kKrEXnYFJ8g=
 jobs:
   include:
-    - stage: build docker image
-      script:
-        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-        - export REPO=cangr/mvsd-mongo-sync
-        - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-        - docker build -f Dockerfile -t $REPO:$COMMIT .
-        - docker tag $REPO:$COMMIT $REPO:$TAG
-        - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-        - docker push $REPO
+  - stage: build docker image
+    script:
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - export REPO=cangr/mvsd-mongo-sync
+    - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo
+      $TRAVIS_BRANCH; fi`
+    - docker build -f Dockerfile -t $REPO:$COMMIT .
+    - docker tag $REPO:$COMMIT $REPO:$TAG
+    - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+    - docker push $REPO
