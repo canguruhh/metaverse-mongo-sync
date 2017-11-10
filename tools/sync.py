@@ -22,27 +22,6 @@ db_name = os.environ['MONGO_DB']
 rpc_uri = 'http://%s:%s/rpc' % (os.environ['MVSD_HOST'], os.environ['MVSD_PORT'])
 ######global asset######
 global_asset = {}
-#服务地址
-host_sms = "sms.253.com"
-
-#端口号
-port = 80
-
-#版本号
-version = "v1.1"
-
-#查账户信息的URI
-balance_get_uri = "/msg/balance"
-
-#智能匹配模版短信接口的URI
-sms_send_uri = "/msg/send"
-
-#创蓝账号
-un  = "N3562857"
-
-#创蓝密码
-pw = "XsLxKH2N5e10fd"
-
 
 max_try = 10
 
@@ -447,23 +426,6 @@ def get_last_height(db_chain):
         , max_input_id.next()['input_id'] + 1if max_input_id.count() > 0 else 0
 
 
-def send_sms(text, phone):
-    """
-    能用接口发短信
-    """
-    import time
-    print('%s,%s,%s' % (text, phone, time.ctime()) )
-    text = "【海枫藤数字资产】%s" % text
-    params = urllib.urlencode({'un': un, 'pw' : pw, 'msg': text, 'phone':phone, 'rd' : '1'})
-    headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-    conn = httplib.HTTPConnection(host, port=port, timeout=30)
-    conn.request("POST", sms_send_uri, params, headers)
-    response = conn.getresponse()
-    response_str = response.read()
-    conn.close()
-    return response_str
-
-
 def clear_fork(db_chain, fork_height):
     blocks = db_chain.block.find({'number':{'$gte':fork_height}})
     block_heights = [b['number'] for b in blocks]
@@ -616,6 +578,8 @@ def do_help(args):
 '''Usage:python block_sync.py action [options...]
 action:
     clear    clear all database
+    fork
+    check
     help''')
 
 import sys
