@@ -434,7 +434,7 @@ def clear_fork(db_chain, fork_height):
     blocks = db_chain.block.find({'number':{'$gte':fork_height}})
     block_heights = [b['number'] for b in blocks]
     txs = db_chain.transaction.find({'block_height':{'$in':block_heights}})
-    new_txs = db_chain.tx.find({'block_height':{'$in':block_heights}})
+    new_txs = db_chain.tx.find({'height':{'$in':block_heights}})
     new_tx_ids = [t['id'] for t in new_txs]
     tx_ids = [t['tx_id'] for t in txs]
     tx_inputs = db_chain.input.find({'tx_id':{'$in':tx_ids}})
