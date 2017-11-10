@@ -1,6 +1,8 @@
 # Metaverse MongoDB Sync
 Docker image to sync from Metaverse mvsd to MongoDB.
 
+[![Build Status](https://travis-ci.org/canguruhh/metaversejs.png?branch=master)](https://travis-ci.org/canguruhh/metaversejs)
+
 # Run
 You can build the image or use the image form docker hub.
 ``` bash
