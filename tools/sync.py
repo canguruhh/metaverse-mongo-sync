@@ -16,10 +16,14 @@ import os
 
 time.sleep( 10 )
 
+# Setup Mongo DB
 mongodb_host = os.environ['MONGO_HOST']
 mongodb_port = int(os.environ['MONGO_PORT'])
 db_name = os.environ['MONGO_DB']
+
+# Setup Mvsd connection
 rpc_uri = 'http://%s:%s/rpc' % (os.environ['MVSD_HOST'], os.environ['MVSD_PORT'])
+
 ######global asset######
 global_asset = {}
 
