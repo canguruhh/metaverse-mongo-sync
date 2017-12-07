@@ -14,7 +14,12 @@ import urllib
 
 import os
 
-time.sleep( 10 )
+try:
+    service_startup_delay = int(os.environ['SYNC_STARTUP_DELAY'])
+    if service_startup_delay > 0:
+        time.sleep( service_startup_delay )
+except:
+    pass
 
 # Setup Mongo DB
 mongodb_host = os.environ['MONGO_HOST']
@@ -162,6 +167,8 @@ def dirty_worker(db_chain, block, transactions, addresses, outs, asset_outs, inp
 
     tb_new_tx = db_chain.tx
     tb_new_tx.insert_many(new_txs)
+
+    process_utxo(db_chain, inputs)
 
     # except Exception as e:
     #     logging.error('mongodb exception,%s' % e)
@@ -443,6 +450,8 @@ def clear_fork(db_chain, fork_height):
     tx_input_ids = [t['input_id'] for t in tx_inputs]
     tx_output_ids = [t['output_id'] for t in tx_outputs]
 
+    process_utxo(db_chain, tx_inputs, True)
+
     db_chain.block.remove({'number':{'$in':block_heights}})
     db_chain.transaction.remove({'tx_id':{'$in':tx_ids}})
     db_chain.tx.remove({'id':{'$in':new_tx_ids}})
@@ -499,7 +508,7 @@ def init_index(db_chain):
     db_chain.transaction.create_index('tx_id')
     db_chain.output.create_index('output_id')
     db_chain.input.create_index('input_id')
-    db_chain.output.create_index([("hash", pymongo.ASCENDING), ("index", pymongo.ASCENDING), ('asset', pymongo.ASCENDING)]) 
+    db_chain.output.create_index([("hash", pymongo.ASCENDING), ("index", pymongo.ASCENDING), ('asset', pymongo.ASCENDING), ('spent', pymongo.ASCENDING)]) 
 
 
 def workaholic(stopped):
@@ -576,6 +585,45 @@ def do_fork(args):
     db_chain = new_mongo(mongodb_host, mongodb_port, db_name)
     clear_fork(db_chain, int(args[0]))
 
+def process_utxo(db_chain, inputs, unmark = False):
+    processed_utxo = 0
+    processed_total = 0
+    for input in inputs:
+        processed_total += 1
+        belong_tx_id = input.get('belong_tx_id', -1)
+        if belong_tx_id == -1:
+            continue
+        output_index = input.get('output_index', 4294967295L)
+        if output_index == 4294967295L:
+            continue
+        asset_type = input.get('asset', '')
+        if unmark == True:
+            db_chain.output.update({"tx_id":belong_tx_id, "index":output_index, "asset":asset_type}, {"$unset":{"spent":1, "spent_in":1}})
+            logging.info("utxo: unset output-tx-id=%s, output-idx=%s", belong_tx_id, output_index)
+        else:
+            spend_tx_id = input.get('tx_id', -1)
+            input_id = input.get('input_id', -1)
+            spend_tx_hash_cursor = db_chain.tx.find({"id":spend_tx_id})
+            spend_tx_hash = null_hash if spend_tx_hash_cursor.count() != 1 else spend_tx_hash_cursor[0]["hash"]
+            result = db_chain.output.update({"tx_id":belong_tx_id, "index":output_index, "asset":asset_type}, \
+                {"$set":{"spent":True, "spent_in":{"hash":spend_tx_hash, "input_id":spend_tx_id}}})
+            if type(result) == dict and result.get('nModified', 0) != 1:
+                logging.warn("utxo: set output-tx-id=%s, output-idx=%s, spent-tx=%s, spent-id=%s, result=%s", belong_tx_id, output_index, spend_tx_id, input_id, result)
+            else:
+                logging.info("utxo: set output-tx-id=%s, output-idx=%s, spent-tx=%s, spent-id=%s", belong_tx_id, output_index, spend_tx_id, input_id)
+        processed_utxo += 1
+    if processed_utxo > 0:
+        logging.info('utxo: %s/%s outputs has been spent' %(processed_utxo, processed_total))
+
+def do_utxo(args):
+    db_chain = new_mongo(mongodb_host, mongodb_port, db_name)
+    
+    if len(args) > 0 and args[0] == 'force':
+        logging.info("utxo: Reset all outputs to unspend...")
+        db_chain.output.update({"spent":{"$eq":True}},{"$unset":{"spent":1,"spent_in":1}}, multi = True)
+
+    inputs = db_chain.input.find()
+    process_utxo(db_chain, inputs)
 
 def do_help(args):
     print(
@@ -584,6 +632,7 @@ action:
     clear    clear all database
     fork
     check
+    utxo [force]    remark utxo, if force set, it will reset all output unspend
     help''')
 
 import sys
@@ -591,7 +640,7 @@ import sys
 def main(argv):
     if len(argv) > 1:
         action = sys.argv[1]
-        cmd_action = {'clear': do_clear, 'help': do_help, 'check': do_check, 'fork': do_fork}
+        cmd_action = {'clear': do_clear, 'help': do_help, 'check': do_check, 'fork': do_fork, 'utxo': do_utxo}
         if action in cmd_action:
             cmd_action[action](argv[2:])
             return
