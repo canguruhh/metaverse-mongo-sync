@@ -622,7 +622,7 @@ def do_utxo(args):
         logging.info("utxo: Reset all outputs to unspend...")
         db_chain.output.update({"spent":{"$eq":True}},{"$unset":{"spent":1,"spent_in":1}}, multi = True)
 
-    inputs = db_chain.input.find(no_cursor_timeout=False)
+    inputs = db_chain.input.find(no_cursor_timeout=True)
     process_utxo(db_chain, inputs)
     inputs.close()
 
