@@ -505,6 +505,7 @@ def get_global_asset(db_chain):
 
 def init_index(db_chain):
     db_chain.block.create_index('number')
+    db_chain.block.create_index('hash')
     db_chain.transaction.create_index('tx_id')
     db_chain.output.create_index('output_id')
     db_chain.input.create_index('input_id')
